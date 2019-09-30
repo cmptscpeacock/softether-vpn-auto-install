@@ -78,7 +78,7 @@ sudo service systemd-resolved restart
 
 ## configure SE as a local bridge
 
-wget -O vpnserver-init-bridge https://raw.githubusercontent.com/icoexist/softether-autoinstall/master/vpnserver-init-bridge > /dev/null 2>&1
+wget -O vpnserver-init-bridge https://raw.githubusercontent.com/cmptscpeacock/softether-vpn-auto-install/master/vpnserver-init-bridge > /dev/null 2>&1
 mv vpnserver-init-bridge /etc/init.d/vpnserver
 chmod 755 /etc/init.d/vpnserver
 printf "\nSystem daemon created. Registering changes...\n\n"
