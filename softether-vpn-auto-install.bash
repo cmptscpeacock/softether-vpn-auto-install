@@ -55,6 +55,11 @@ cd /tmp/softether-autoinstall
 apt install -y dnsmasq
 wget -O dnsmasq.conf https://raw.githubusercontent.com/icoexist/softether-autoinstall/master/dnsmasq.conf
 rm /etc/dnsmasq.conf && mv dnsmasq.conf /etc/dnsmasq.conf
+wget -O dnsmasq.service https://raw.githubusercontent.com/cmptscpeacock/softether-vpn-auto-install/master/dnsmasq.service
+mv dnsmasq.service /lib/systemd/system/dnsmasq.service
+wget -O resolved.conf https://raw.githubusercontent.com/cmptscpeacock/softether-vpn-auto-install/master/resolved.conf
+mv resolved.conf /etc/systemd/resolved.conf
+
 
 wget -O vpnserver-init-bridge https://raw.githubusercontent.com/icoexist/softether-autoinstall/master/vpnserver-init-bridge > /dev/null 2>&1
 mv vpnserver-init-bridge /etc/init.d/vpnserver
