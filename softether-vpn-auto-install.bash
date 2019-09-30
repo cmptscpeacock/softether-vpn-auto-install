@@ -44,7 +44,7 @@ cd /tmp/softether-autoinstall
 
 ## install build-essential
 
-PKG_OK=$(dpkg-query -W --showformat='${Status}\n' build-essential|grep "install ok installed")
+PKG_OK=$(dpkg-query -W --showformat='${Status}\n' build-essential|grep "installed ok")
 echo  "Checking for build-essential: $PKG_OK"
 if [ "" == "$PKG_OK" ]; then
   echo "build-essential not installed. Installing now."
