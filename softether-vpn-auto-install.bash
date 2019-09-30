@@ -11,6 +11,14 @@ NC='\033[0m' # No Color
 clear
 
 # remove previous versions
+## remove hub and bridge
+
+if [ -d "/opt/vpnserver" ]; then
+  cd /usr/local/vpnserver/
+  ./vpncmd /server localhost:443 /cmd HubDelete hubName1
+  ./vpncmd /server localhost:443 /cmd bridgeDelete hubName1 /Device:soft1
+fi
+
 ## check for SE install folder
 
 if [ -d "/opt/vpnserver" ]; then
@@ -78,9 +86,12 @@ sudo service systemd-resolved restart
 ## enable ipv4 forwarder
 wget -O ipv4_forwarding.conf https://raw.githubusercontent.com/cmptscpeacock/softether-vpn-auto-install/master/ipv4_forwarding.conf
 mv ipv4_forwarding.conf /etc/sysctl.d/ipv4_forwarding.conf
+## set persistent tap interface
+wget -O interfaces https://raw.githubusercontent.com/cmptscpeacock/softether-vpn-auto-install/master/interfaces
+mv interfaces /etc/network/interfaces
 sysctl --system
 
-## configure SE as a local bridge
+## install SE as local bridge
 
 wget -O vpnserver-init-bridge https://raw.githubusercontent.com/cmptscpeacock/softether-vpn-auto-install/master/vpnserver-init-bridge > /dev/null 2>&1
 mv vpnserver-init-bridge /etc/init.d/vpnserver
@@ -93,5 +104,15 @@ systemctl restart dnsmasq
 printf "\nCleaning up...\n\n"
 cd && rm -rf /tmp/softether-autoinstall > /dev/null 2>&1
 systemctl is-active --quiet vpnserver && echo "Service vpnserver is running."
+
+# confifgure SE
+
+## create bridge and hub
+
+cd /usr/local/vpnserver/
+./vpncmd /server localhost:443 /cmd bridgecreate hubName1 /Device:soft1 /TAP:yes
+./vpncmd /server localhost:443 /cmd HubCreate hubName1 /PASSWORD:1234
+
+
 ##printf "\n${RED}!!! IMPORTANT !!!${NC}\n\nTo configure the server, use the SoftEther VPN Server Manager located here: http://bit.ly/2D30Wj8 or use ${RED}sudo /opt/vpnserver/vpncmd${NC}\n\n${RED}!!! UFW is not enabled with this script !!!${NC}\n\nTo see how to open ports for SoftEther VPN, please go here: http://bit.ly/2JdZPx6\n\nNeed help? Feel free to join the Discord server: https://icoexist.io/discord\n\n"
 ##printf "\n${RED}!!! IMPORTANT !!!${NC}\n\nYou still need to add the local bridge using the SoftEther VPN Server Manager. It is important that after you add the local bridge, you restart both dnsmasq and the vpnserver!\nSee the tutorial here: http://bit.ly/2HoxlQO\n\n"
