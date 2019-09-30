@@ -75,6 +75,10 @@ wget -O resolved.conf https://raw.githubusercontent.com/cmptscpeacock/softether-
 mv resolved.conf /etc/systemd/resolved.conf
 ##chmod 644 /etc/systemd/resolved.conf
 sudo service systemd-resolved restart
+## enable ipv4 forwarder
+wget -O ipv4_forwarding.conf https://raw.githubusercontent.com/cmptscpeacock/softether-vpn-auto-install/master/ipv4_forwarding.conf
+mv ipv4_forwarding.conf /etc/sysctl.d/ipv4_forwarding.conf
+sysctl --system
 
 ## configure SE as a local bridge
 
