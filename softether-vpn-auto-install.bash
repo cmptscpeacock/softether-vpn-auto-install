@@ -65,12 +65,15 @@ cd /tmp/softether-autoinstall
 ## configure dhcp service
 
 apt install -y dnsmasq
-wget -O dnsmasq.conf https://raw.githubusercontent.com/icoexist/softether-autoinstall/master/dnsmasq.conf
+wget -O dnsmasq.conf https://raw.githubusercontent.com/cmptscpeacock/softether-vpn-auto-install/master/dnsmasq.conf
 rm /etc/dnsmasq.conf && mv dnsmasq.conf /etc/dnsmasq.conf
+##chmod 644 /etc/dnsmasq.conf
 wget -O dnsmasq.service https://raw.githubusercontent.com/cmptscpeacock/softether-vpn-auto-install/master/dnsmasq.service
 mv dnsmasq.service /lib/systemd/system/dnsmasq.service
+##chmod 644 /lib/systemd/system/dnsmasq.service
 wget -O resolved.conf https://raw.githubusercontent.com/cmptscpeacock/softether-vpn-auto-install/master/resolved.conf
 mv resolved.conf /etc/systemd/resolved.conf
+##chmod 644 /etc/systemd/resolved.conf
 sudo service systemd-resolved restart
 
 ## configure SE as a local bridge
@@ -88,9 +91,3 @@ cd && rm -rf /tmp/softether-autoinstall > /dev/null 2>&1
 systemctl is-active --quiet vpnserver && echo "Service vpnserver is running."
 ##printf "\n${RED}!!! IMPORTANT !!!${NC}\n\nTo configure the server, use the SoftEther VPN Server Manager located here: http://bit.ly/2D30Wj8 or use ${RED}sudo /opt/vpnserver/vpncmd${NC}\n\n${RED}!!! UFW is not enabled with this script !!!${NC}\n\nTo see how to open ports for SoftEther VPN, please go here: http://bit.ly/2JdZPx6\n\nNeed help? Feel free to join the Discord server: https://icoexist.io/discord\n\n"
 ##printf "\n${RED}!!! IMPORTANT !!!${NC}\n\nYou still need to add the local bridge using the SoftEther VPN Server Manager. It is important that after you add the local bridge, you restart both dnsmasq and the vpnserver!\nSee the tutorial here: http://bit.ly/2HoxlQO\n\n"
-
-
-
-cd /usr/local/vpnserver/
-sudo ./vpncmd
-echo $'1\n\n' 
