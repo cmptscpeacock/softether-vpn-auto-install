@@ -97,16 +97,16 @@ cd /tmp/softether-autoinstall
 
 ## install build-essential
 
-PKG_OK=$(dpkg-query -W --showformat='${Status}\n' build-essential|grep "installed ok")
+PKG_OK=$(dpkg-query -W --showformat='${Status}\n' build-essential|grep "Installed OK")
 echo  "Checking for build-essential: $PKG_OK"
 if [ "" == "$PKG_OK" ]; then
-  echo "build-essential not installed. Installing now."
+  echo "build-essential is not installed. Installing now..."
   sudo apt install -y build-essential
 fi
 
 ## download SoftEther VPN
 
-printf "\nDownloading SoftEther"
+printf "\nDownloading SoftEther VPN"
 wget -O softethervpn.tar.gz ${seInstallFileUrl}
 tar xzf softethervpn.tar.gz
 cd vpnserver
@@ -142,14 +142,11 @@ sysctl --system
 wget -O vpnserver-init-bridge https://raw.githubusercontent.com/cmptscpeacock/softether-vpn-auto-install/master/vpnserver-init-bridge > /dev/null 2>&1
 mv vpnserver-init-bridge /etc/init.d/vpnserver
 chmod 755 /etc/init.d/vpnserver
-printf "\nSystem daemon created. Registering changes...\n\n"
 update-rc.d vpnserver defaults > /dev/null 2>&1
-printf "\nSoftEther VPN Server should now start as a system service from now on.\n\n"
 systemctl start vpnserver
 systemctl restart dnsmasq
-printf "\nCleaning up...\n\n"
 cd && rm -rf /tmp/softether-autoinstall > /dev/null 2>&1
-systemctl is-active --quiet vpnserver && echo "Service vpnserver is running."
+systemctl is-active --quiet vpnserver && echo "vpnserver is now running"
 sleep 10
 
 # confifgure SE
@@ -189,6 +186,6 @@ cd /opt/vpnserver/
 
 printf "\n${RED}${UNDERLINE}SE Server Password:${WHITE}${RESETUNDERLINE}  ${seServerPassword}\n\n"
 printf "\n${RED}${UNDERLINE}Hub Password:${WHITE}${RESETUNDERLINE}  ${hubPassword}\n\n"
-printf "\n${RED}${UNDERLINE}Admin Username:${${hubName}}${RESETUNDERLINE}  ${hubAdmin} ${RED}${UNDERLINE}Admin Password:${${hubName}}${RESETUNDERLINE}  ${adminPassword}\n\n"
-printf "\n${RED}${UNDERLINE}IPSec Pre-Shared Key:${${hubName}}${RESETUNDERLINE}  ${preSharedKey}\n\n"
-printf "\n${RED}${UNDERLINE}DDNS Hostname:${${hubName}}${RESETUNDERLINE}  ${ddnsHostname}.vpnazure.net\n\n"
+printf "\n${RED}${UNDERLINE}Admin Username:${WHITE}${RESETUNDERLINE}  ${hubAdmin} ${RED}${UNDERLINE}Admin Password:${WHITE}${RESETUNDERLINE}  ${adminPassword}\n\n"
+printf "\n${RED}${UNDERLINE}IPSec Pre-Shared Key:${WHITE}${RESETUNDERLINE}  ${preSharedKey}\n\n"
+printf "\n${RED}${UNDERLINE}DDNS Hostname:${WHITE}${RESETUNDERLINE}  ${ddnsHostname}.vpnazure.net\n\n"
