@@ -146,7 +146,7 @@ update-rc.d vpnserver defaults > /dev/null 2>&1
 systemctl start vpnserver
 systemctl restart dnsmasq
 cd && rm -rf /tmp/softether-autoinstall > /dev/null 2>&1
-systemctl is-active --quiet vpnserver && echo "vpnserver is now running"
+systemctl is-active --quiet vpnserver && echo "\n\nvpnserver is now running"
 sleep 10
 
 # confifgure SE
