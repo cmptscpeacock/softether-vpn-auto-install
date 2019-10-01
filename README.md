@@ -30,5 +30,9 @@ Ideally, this script should be run on a completely blank server to avoid any iss
 
 9. The script can be invoked using:
 
+## Supported Operating Systems
+#### Ubuntu 16.04 LTS +
+```bash
 cd /root/
 wget --no-cache -O se-install https://raw.githubusercontent.com/cmptscpeacock/softether-vpn-auto-install/master/softether-vpn-auto-install.bash && chmod +x se-install && ./se-install
+```
