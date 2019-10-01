@@ -1,4 +1,4 @@
-# softether-vpn-auto-install
+# SoftEther VPN Server Auto Installer (Local Bridge version)
 
 This script will uninstall and reinstall SoftEther VPN Server. If you are upgrading, BACKUP the config using the GUI or copy it from /opt/vpnserver/.
 
@@ -35,4 +35,27 @@ Ideally, this script should be run on a completely blank server to avoid any iss
 ```bash
 cd /root/
 wget --no-cache -O se-install https://raw.githubusercontent.com/cmptscpeacock/softether-vpn-auto-install/master/softether-vpn-auto-install.bash && chmod +x se-install && ./se-install
+```
+
+## Copyright & Credit
+The SoftEther VPN Project is managed by Daiyuu Nobori, the creator and owner of the SoftEther VPN Project. You can find the stable GitHub repo here: https://github.com/SoftEtherVPN/SoftEtherVPN_Stable/   
+
+The SoftEther VPN Developer branch is located here: https://github.com/SoftEtherVPN/SoftEtherVPN
+
+The SoftEther VPN Project code has not been modified.
+
+SoftEther Project copyright statement:
+
+```
+Copyright (c) SoftEther Project at University of Tsukuba, Japan.
+
+The development of SoftEther VPN was supported by the MITOH Project,
+a research and development project by Japanese Government,
+subsidized by METI (Ministry of Economy, Trade and Industry of Japan),
+administrated by IPA (Information Promotion Agency, Japan).
+https://www.ipa.go.jp/english/humandev/
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License version 2
+as published by the Free Software Foundation.
 ```

@@ -9,10 +9,10 @@ hubName='hubName1'
 
 hubAdmin='admin.user1'
 
-## define console colors
+## define console colours
 
-RED='\033[0;31m'
-NC='\033[1;37m' # No Color
+RED='\033[0;31m' # red
+WHITE='\033[1;37m' # white
 
 ## define formatting
 
@@ -21,7 +21,7 @@ RESETUNDERLINE='\033[24m'
 
 # user confirmation
 
-printf "\n${RED}${UNDERLINE}IMPORTANT${NC}${RESETUNDERLINE}\n\nSoftEther VPN is about to be uninstalled. Backup your config file via the GUI or copy it from /opt/vpnserver/ if you are upgrading. \n\n"
+printf "\n${RED}${UNDERLINE}IMPORTANT${WHITE}${RESETUNDERLINE}\n\nSoftEther VPN is about to be uninstalled. Backup your config file via the GUI or copy it from /opt/vpnserver/ if you are upgrading. \n\n"
 
 while true; do
     read -p "Reboot needed prior to uninstallation. Have you rebooted? (Y - will continue | N - will reboot now)?" answer
@@ -46,7 +46,7 @@ clear
 ## remove hub and bridge
 ## password command omitted so manually entered
 
-printf "\n${RED}${UNDERLINE}Previous Password${NC}${RESETUNDERLINE} If asked, enter the previous SoftEther VPN Server password \n\n"
+printf "\n${RED}${UNDERLINE}Previous Password${WHITE}${RESETUNDERLINE} If asked, enter the previous SoftEther VPN Server password \n\n"
 
 if [ -d "/opt/vpnserver" ]; then
   cd /opt/vpnserver/
@@ -187,8 +187,8 @@ cd /opt/vpnserver/
 
 ## output details
 
-printf "\n${RED}${UNDERLINE}SE Server Password:${NC}${RESETUNDERLINE}  ${seServerPassword}\n\n"
-printf "\n${RED}${UNDERLINE}Hub Password:${NC}${RESETUNDERLINE}  ${hubPassword}\n\n"
-printf "\n${RED}${UNDERLINE}Admin Username:${NC}${RESETUNDERLINE}  ${hubAdmin} ${RED}${UNDERLINE}Admin Password:${NC}${RESETUNDERLINE}  ${adminPassword}\n\n"
-printf "\n${RED}${UNDERLINE}IPSec Pre-Shared Key:${NC}${RESETUNDERLINE}  ${preSharedKey}\n\n"
-printf "\n${RED}${UNDERLINE}DDNS Hostname:${NC}${RESETUNDERLINE}  ${ddnsHostname}.vpnazure.net\n\n"
+printf "\n${RED}${UNDERLINE}SE Server Password:${WHITE}${RESETUNDERLINE}  ${seServerPassword}\n\n"
+printf "\n${RED}${UNDERLINE}Hub Password:${WHITE}${RESETUNDERLINE}  ${hubPassword}\n\n"
+printf "\n${RED}${UNDERLINE}Admin Username:${${hubName}}${RESETUNDERLINE}  ${hubAdmin} ${RED}${UNDERLINE}Admin Password:${${hubName}}${RESETUNDERLINE}  ${adminPassword}\n\n"
+printf "\n${RED}${UNDERLINE}IPSec Pre-Shared Key:${${hubName}}${RESETUNDERLINE}  ${preSharedKey}\n\n"
+printf "\n${RED}${UNDERLINE}DDNS Hostname:${${hubName}}${RESETUNDERLINE}  ${ddnsHostname}.vpnazure.net\n\n"
