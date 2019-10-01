@@ -27,7 +27,7 @@ clear
 ## remove hub and bridge
 ## password command omitted so manually entered
 
-  echo "Hub Name: ${hubName1}"
+  echo "Hub Name: $hubName1"
 
 if [ -d "/opt/vpnserver" ]; then
   cd /opt/vpnserver/
