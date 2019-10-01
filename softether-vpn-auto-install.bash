@@ -92,8 +92,8 @@ cd /tmp/softether-autoinstall
 
 ## Perform apt update
 
-##apt update -y
-##apt upgrade -y
+apt update -y
+apt upgrade -y
 
 ## install build-essential
 
@@ -150,8 +150,8 @@ systemctl is-active --quiet vpnserver && echo "vpnserver is now running"
 sleep 10
 
 # confifgure SE
-
 ## generate credentials + randoms
+
 seServerPassword=$(cat /dev/urandom | base64 -w 0 | fold -w 8 | head -1)
 hubPassword=$(cat /dev/urandom | base64 -w 0 | fold -w 8 | head -1)
 adminPassword=$(cat /dev/urandom | base64 -w 0 | fold -w 8 | head -1)
