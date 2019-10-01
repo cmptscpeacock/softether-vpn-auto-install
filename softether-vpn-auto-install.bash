@@ -46,7 +46,7 @@ clear
 ## remove hub and bridge
 ## password command omitted so manually entered
 
-printf "\n${RED}${UNDERLINE}Previous Password${NC}${RESETUNDERLINE} If asked, enter the previous Hub password \n\n"
+printf "\n${RED}${UNDERLINE}Previous Password${NC}${RESETUNDERLINE} If asked, enter the previous SoftEther VPN Server password \n\n"
 
 if [ -d "/opt/vpnserver" ]; then
   cd /opt/vpnserver/
