@@ -27,8 +27,6 @@ clear
 ## remove hub and bridge
 ## password command omitted so manually entered
 
-  echo "Hub Name: ${hubName}"
-
 if [ -d "/opt/vpnserver" ]; then
   cd /opt/vpnserver/
   ./vpncmd /server localhost:443 /cmd HubDelete ${hubName}
