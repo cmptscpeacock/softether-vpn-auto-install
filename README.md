@@ -13,12 +13,12 @@ Ideally, this script should be run on a completely blank server to avoid any iss
 3. The script will then go ahead and install the necessary files/folders. Using the variable you can define the version of SoftEther VPN Server to use.
 
 4. Be warned that the process will replace the following files with files stored in github so backups of the files should be taken if you need the content within post-installation:
-    /etc/dnsmasq.conf
-    /lib/systemd/system/dnsmasq.service
-    /etc/systemd/resolved.conf
-    /etc/sysctl.d/ipv4_forwarding.conf
-    /etc/network/interfaces
-    /etc/init.d/vpnserver
+- /etc/dnsmasq.conf
+- /lib/systemd/system/dnsmasq.service
+- /etc/systemd/resolved.conf
+- /etc/sysctl.d/ipv4_forwarding.conf
+- /etc/network/interfaces
+- /etc/init.d/vpnserver
 
 5. The script then configures SoftEther VPN Server, generating random passwords for the Server password, Hub password, Admin user VPN account password, IPSec Pre-Shared Key and DDNS hostname for the Azure VPN service.
 
