@@ -38,6 +38,13 @@ wget --no-cache -O se-install https://raw.githubusercontent.com/cmptscpeacock/so
 ```
 
 ## Copyright & Credit
+
+### icoexist
+
+This project is based on the auto install project created by icoexist (awesome job!) located at: https://github.com/icoexist/softether-autoinstall.
+
+### SoftEther VPN Project
+
 The SoftEther VPN Project is managed by Daiyuu Nobori, the creator and owner of the SoftEther VPN Project. You can find the stable GitHub repo here: https://github.com/SoftEtherVPN/SoftEtherVPN_Stable/   
 
 The SoftEther VPN Developer branch is located here: https://github.com/SoftEtherVPN/SoftEtherVPN
