@@ -1,18 +1,22 @@
 #!/bin/bash
 
 # variables
+
+hubName='hubName1'
+
 ## credentials
 
 hubAdmin='admin.user1'
+
 ## define console colors
 
 RED='\033[0;31m'
 NC='\033[1;37m' # No Color
 
 ## define formatting
+
 UNDERLINE='\033[4m'
 RESETUNDERLINE='\033[24m'
-
 
 # execute as sudo
 
@@ -21,11 +25,12 @@ clear
 
 # remove previous versions
 ## remove hub and bridge
+## password command omitted so manually entered
 
 if [ -d "/opt/vpnserver" ]; then
   cd /opt/vpnserver/
-  ./vpncmd /server localhost:443 /cmd HubDelete hubName1
-  ./vpncmd /server localhost:443 /cmd bridgeDelete hubName1 /Device:soft1
+  ./vpncmd /server localhost:443 /cmd HubDelete ${hubName1}
+  ./vpncmd /server localhost:443 /cmd bridgeDelete ${hubName1} /Device:soft1
 fi
 
 ## check for SE install folder
@@ -48,7 +53,7 @@ fi
 
 update-rc.d -f vpnserver remove
 
-# install SE
+# install SoftEther VPN
 ## create working directory
 
 mkdir -p /tmp/softether-autoinstall
@@ -68,7 +73,7 @@ if [ "" == "$PKG_OK" ]; then
   sudo apt install -y build-essential
 fi
 
-## download SoftEther
+## download SoftEther VPN
 
 printf "\nDownloading SoftEther"
 wget https://github.com/SoftEtherVPN/SoftEtherVPN_Stable/releases/download/v4.29-9680-rtm/softether-vpnserver-v4.29-9680-rtm-2019.02.28-linux-arm_eabi-32bit.tar.gz
@@ -120,29 +125,31 @@ systemctl is-active --quiet vpnserver && echo "Service vpnserver is running."
 hubPassword=$(cat /dev/urandom | base64 -w 0 | fold -w 8 | head -1)
 adminPassword=$(cat /dev/urandom | base64 -w 0 | fold -w 8 | head -1)
 ddnsHostname=$(cat /dev/urandom | base64 -w 0 | tr -d '[A-Z/+]' | fold -w 8 | head -1)
+preSharedKey=$(cat /dev/urandom | base64 -w 0 | tr -d '[/+]' | fold -w 9 | head -1)
 
 ## create bridge and hub
 
 cd /opt/vpnserver/
-./vpncmd /server localhost:443 /cmd bridgecreate hubName1 /Device:soft1 /TAP:yes
-##./vpncmd /server localhost:443 /cmd HubCreate hubName1 /PASSWORD:${hubPassword}
-./vpncmd /server localhost:443 /cmd HubCreate hubName1 /PASSWORD:1234
+./vpncmd /server localhost:443 /cmd bridgecreate ${hubName1} /Device:soft1 /TAP:yes
+##./vpncmd /server localhost:443 /cmd HubCreate ${hubName1} /PASSWORD:${hubPassword}
+./vpncmd /server localhost:443 /cmd HubCreate ${hubName1} /PASSWORD:1234
 
 
 ## create default username
 
-##./vpncmd /server localhost:443 /hub:hubName1 /PASSWORD:${hubPassword} /CMD UserCreate ${hubAdmin} /GROUP:none /REALNAME:none /NOTE:none
-./vpncmd /server localhost:443 /hub:hubName1 /PASSWORD:1234 /CMD UserCreate ${hubAdmin} /GROUP:none /REALNAME:none /NOTE:none
-##./vpncmd /server localhost:443 /hub:hubName1 /PASSWORD:${hubPassword} /CMD UserPasswordSet ${hubAdmin} /PASSWORD:${adminPassword}
-./vpncmd /server localhost:443 /hub:hubName1 /PASSWORD:1234 /CMD UserPasswordSet ${hubAdmin} /PASSWORD:123456789
+##./vpncmd /server localhost:443 /hub:${hubName1} /PASSWORD:${hubPassword} /CMD UserCreate ${hubAdmin} /GROUP:none /REALNAME:none /NOTE:none
+./vpncmd /server localhost:443 /hub:${hubName1} /PASSWORD:1234 /CMD UserCreate ${hubAdmin} /GROUP:none /REALNAME:none /NOTE:none
+##./vpncmd /server localhost:443 /hub:${hubName1} /PASSWORD:${hubPassword} /CMD UserPasswordSet ${hubAdmin} /PASSWORD:${adminPassword}
+./vpncmd /server localhost:443 /hub:${hubName1} /PASSWORD:1234 /CMD UserPasswordSet ${hubAdmin} /PASSWORD:123456789
 
 
 ## create vpn
 
-./vpncmd /server localhost:443 /cmd IPsecEnable /L2TP:yes /L2TPRAW:no /ETHERIP:no /PSK:123456789 /DEFAULTHUB:hubNme1
+./vpncmd /server localhost:443 /cmd IPsecEnable /L2TP:yes /L2TPRAW:no /ETHERIP:no /PSK:${preSharedKey} /DEFAULTHUB:${hubName1}
 ./vpncmd /server localhost:443 /cmd DynamicDnsSetHostname ${ddnsHostname}
 ./vpncmd /server localhost:443 /cmd VpnAzureSetEnable yes
 
 printf "\n${RED}${UNDERLINE}Hub Password:${NC}${RESETUNDERLINE}  ${hubPassword}\n\n"
 printf "\n${RED}${UNDERLINE}Admin Username:${NC}${RESETUNDERLINE}  ${hubAdmin} ${RED}${UNDERLINE}Admin Password:${NC}${RESETUNDERLINE}  ${adminPassword}\n\n"
+printf "\n${RED}${UNDERLINE}IPSec Pre-Shared Key:${NC}${RESETUNDERLINE}  ${preSharedKey}\n\n"
 printf "\n${RED}${UNDERLINE}DDNS Hostname:${NC}${RESETUNDERLINE}  ${ddnsHostname}.vpnazure.net\n\n"
