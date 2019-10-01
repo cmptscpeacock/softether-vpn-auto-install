@@ -30,7 +30,6 @@ Ideally, this script should be run on a completely blank server to avoid any iss
 
 9. The script can be invoked using:
 
-## Supported Operating Systems
 #### Ubuntu 16.04 LTS +
 ```bash
 cd /root/
