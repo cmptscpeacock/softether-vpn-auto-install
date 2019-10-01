@@ -1,9 +1,18 @@
 #!/bin/bash
 
-# define console colors
+# variables
+## credentials
+
+hubAdmin='admin.user1'
+## define console colors
 
 RED='\033[0;31m'
-NC='\033[0m' # No Color
+NC='\033[1;37m' # No Color
+
+## define formatting
+UNDERLINE='\033[4m'
+RESETUNDERLINE='\033[24m'
+
 
 # execute as sudo
 
@@ -14,7 +23,7 @@ clear
 ## remove hub and bridge
 
 if [ -d "/opt/vpnserver" ]; then
-  cd /usr/local/vpnserver/
+  cd /opt/vpnserver/
   ./vpncmd /server localhost:443 /cmd HubDelete hubName1
   ./vpncmd /server localhost:443 /cmd bridgeDelete hubName1 /Device:soft1
 fi
@@ -107,12 +116,33 @@ systemctl is-active --quiet vpnserver && echo "Service vpnserver is running."
 
 # confifgure SE
 
+## generate credentials + randoms
+hubPassword=$(cat /dev/urandom | base64 -w 0 | fold -w 8 | head -1)
+adminPassword=$(cat /dev/urandom | base64 -w 0 | fold -w 8 | head -1)
+ddnsHostname=$(cat /dev/urandom | base64 -w 0 | tr -d '[A-Z/+]' | fold -w 8 | head -1)
+
 ## create bridge and hub
 
-cd /usr/local/vpnserver/
+cd /opt/vpnserver/
 ./vpncmd /server localhost:443 /cmd bridgecreate hubName1 /Device:soft1 /TAP:yes
+##./vpncmd /server localhost:443 /cmd HubCreate hubName1 /PASSWORD:${hubPassword}
 ./vpncmd /server localhost:443 /cmd HubCreate hubName1 /PASSWORD:1234
 
 
-##printf "\n${RED}!!! IMPORTANT !!!${NC}\n\nTo configure the server, use the SoftEther VPN Server Manager located here: http://bit.ly/2D30Wj8 or use ${RED}sudo /opt/vpnserver/vpncmd${NC}\n\n${RED}!!! UFW is not enabled with this script !!!${NC}\n\nTo see how to open ports for SoftEther VPN, please go here: http://bit.ly/2JdZPx6\n\nNeed help? Feel free to join the Discord server: https://icoexist.io/discord\n\n"
-##printf "\n${RED}!!! IMPORTANT !!!${NC}\n\nYou still need to add the local bridge using the SoftEther VPN Server Manager. It is important that after you add the local bridge, you restart both dnsmasq and the vpnserver!\nSee the tutorial here: http://bit.ly/2HoxlQO\n\n"
+## create default username
+
+##./vpncmd /server localhost:443 /hub:hubName1 /PASSWORD:${hubPassword} /CMD UserCreate ${hubAdmin} /GROUP:none /REALNAME:none /NOTE:none
+./vpncmd /server localhost:443 /hub:hubName1 /PASSWORD:1234 /CMD UserCreate ${hubAdmin} /GROUP:none /REALNAME:none /NOTE:none
+##./vpncmd /server localhost:443 /hub:hubName1 /PASSWORD:${hubPassword} /CMD UserPasswordSet ${hubAdmin} /PASSWORD:${adminPassword}
+./vpncmd /server localhost:443 /hub:hubName1 /PASSWORD:1234 /CMD UserPasswordSet ${hubAdmin} /PASSWORD:123456789
+
+
+## create vpn
+
+./vpncmd /server localhost:443 /cmd IPsecEnable /L2TP:yes /L2TPRAW:no /ETHERIP:no /PSK:123456789 /DEFAULTHUB:hubNme1
+./vpncmd /server localhost:443 /cmd DynamicDnsSetHostname ${ddnsHostname}
+./vpncmd /server localhost:443 /cmd VpnAzureSetEnable yes
+
+printf "\n${RED}${UNDERLINE}Hub Password:${NC}${RESETUNDERLINE}  ${hubPassword}\n\n"
+printf "\n${RED}${UNDERLINE}Admin Username:${NC}${RESETUNDERLINE}  ${hubAdmin} ${RED}${UNDERLINE}Admin Password:${NC}${RESETUNDERLINE}  ${adminPassword}\n\n"
+printf "\n${RED}${UNDERLINE}DDNS Hostname:${NC}${RESETUNDERLINE}  ${ddnsHostname}.vpnazure.net\n\n"
