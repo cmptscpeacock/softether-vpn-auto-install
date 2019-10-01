@@ -27,12 +27,12 @@ clear
 ## remove hub and bridge
 ## password command omitted so manually entered
 
-  echo "Hub Name: $hubName1"
+  echo "Hub Name: ${hubName}"
 
 if [ -d "/opt/vpnserver" ]; then
   cd /opt/vpnserver/
-  ./vpncmd /server localhost:443 /cmd HubDelete $hubName1
-  ./vpncmd /server localhost:443 /cmd bridgeDelete $hubName1 /Device:soft1
+  ./vpncmd /server localhost:443 /cmd HubDelete ${hubName}
+  ./vpncmd /server localhost:443 /cmd bridgeDelete ${hubName} /Device:soft1
 fi
 
 ## check for SE install folder
@@ -132,22 +132,22 @@ preSharedKey=$(cat /dev/urandom | base64 -w 0 | tr -d '[/+]' | fold -w 9 | head 
 ## create bridge and hub
 
 cd /opt/vpnserver/
-./vpncmd /server localhost:443 /cmd bridgecreate $hubName1 /Device:soft1 /TAP:yes
-##./vpncmd /server localhost:443 /cmd HubCreate $hubName1 /PASSWORD:${hubPassword}
-./vpncmd /server localhost:443 /cmd HubCreate $hubName1 /PASSWORD:1234
+./vpncmd /server localhost:443 /cmd bridgecreate ${hubName} /Device:soft1 /TAP:yes
+##./vpncmd /server localhost:443 /cmd HubCreate ${hubName} /PASSWORD:${hubPassword}
+./vpncmd /server localhost:443 /cmd HubCreate ${hubName} /PASSWORD:1234
 
 
 ## create default username
 
-##./vpncmd /server localhost:443 /hub:$hubName1 /PASSWORD:${hubPassword} /CMD UserCreate ${hubAdmin} /GROUP:none /REALNAME:none /NOTE:none
-./vpncmd /server localhost:443 /hub:$hubName1 /PASSWORD:1234 /CMD UserCreate ${hubAdmin} /GROUP:none /REALNAME:none /NOTE:none
-##./vpncmd /server localhost:443 /hub:$hubName1 /PASSWORD:${hubPassword} /CMD UserPasswordSet ${hubAdmin} /PASSWORD:${adminPassword}
-./vpncmd /server localhost:443 /hub:$hubName1 /PASSWORD:1234 /CMD UserPasswordSet ${hubAdmin} /PASSWORD:123456789
+##./vpncmd /server localhost:443 /hub:${hubName} /PASSWORD:${hubPassword} /CMD UserCreate ${hubAdmin} /GROUP:none /REALNAME:none /NOTE:none
+./vpncmd /server localhost:443 /hub:${hubName} /PASSWORD:1234 /CMD UserCreate ${hubAdmin} /GROUP:none /REALNAME:none /NOTE:none
+##./vpncmd /server localhost:443 /hub:${hubName} /PASSWORD:${hubPassword} /CMD UserPasswordSet ${hubAdmin} /PASSWORD:${adminPassword}
+./vpncmd /server localhost:443 /hub:${hubName} /PASSWORD:1234 /CMD UserPasswordSet ${hubAdmin} /PASSWORD:123456789
 
 
 ## create vpn
 
-./vpncmd /server localhost:443 /cmd IPsecEnable /L2TP:yes /L2TPRAW:no /ETHERIP:no /PSK:${preSharedKey} /DEFAULTHUB:$hubName1
+./vpncmd /server localhost:443 /cmd IPsecEnable /L2TP:yes /L2TPRAW:no /ETHERIP:no /PSK:${preSharedKey} /DEFAULTHUB:${hubName}
 ./vpncmd /server localhost:443 /cmd DynamicDnsSetHostname ${ddnsHostname}
 ./vpncmd /server localhost:443 /cmd VpnAzureSetEnable yes
 
