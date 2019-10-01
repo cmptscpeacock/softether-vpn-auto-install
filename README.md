@@ -27,3 +27,8 @@ Ideally, this script should be run on a completely blank server to avoid any iss
 7. Once everything has been installed and configured you will be able to immediately connect to the SoftEther VPN Server via your SSTP VPN client using the DDNS hostname and admin user VPN account credentials as shown.
 
 8. No support is provided and no liability is accepted in the event of adverse outcome with the use of the script. If you choose to use it, it is your responsibility to test it before using.
+
+9. The script can be invoked using:
+
+cd /root/
+wget --no-cache -O se-install https://raw.githubusercontent.com/cmptscpeacock/softether-vpn-auto-install/master/softether-vpn-auto-install.bash && chmod +x se-install && ./se-install
