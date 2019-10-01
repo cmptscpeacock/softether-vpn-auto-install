@@ -3,7 +3,6 @@
 # variables
 
 seInstallFileUrl='https://github.com/SoftEtherVPN/SoftEtherVPN_Stable/releases/download/v4.29-9680-rtm/softether-vpnserver-v4.29-9680-rtm-2019.02.28-linux-arm_eabi-32bit.tar.gz'
-seInstallFileName='softether-vpnserver-v4.29-9680-rtm-2019.02.28-linux-arm_eabi-32bit.tar.gz'
 hubName='hubName1'
 
 ## credentials
@@ -108,8 +107,8 @@ fi
 ## download SoftEther VPN
 
 printf "\nDownloading SoftEther"
-wget ${seInstallFileUrl}
-tar xzf ${seInstallFileName}
+wget -O softethervpn.tar.gz ${seInstallFileUrl}
+tar xzf softethervpn.tar.gz
 cd vpnserver
 echo $'1\n1\n1' | make &&
 cd /tmp/softether-autoinstall && mv vpnserver/ /opt
