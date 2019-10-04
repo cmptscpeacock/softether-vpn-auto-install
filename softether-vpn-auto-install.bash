@@ -117,7 +117,7 @@ cd /tmp/softether-autoinstall
 
 ## configure dhcp service
 
-apt install -y aptitude dnsmasq dnsmasq-base
+apt install -y dnsmasq
 wget -O dnsmasq.conf https://raw.githubusercontent.com/cmptscpeacock/softether-vpn-auto-install/master/dnsmasq.conf
 rm /etc/dnsmasq.conf && mv dnsmasq.conf /etc/dnsmasq.conf
 wget -O dnsmasq.service https://raw.githubusercontent.com/cmptscpeacock/softether-vpn-auto-install/master/dnsmasq.service
