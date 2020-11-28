@@ -8,7 +8,7 @@
 # Short-Description: Start daemon at boot time
 # Description:       Enable Softether by daemon.
 ### END INIT INFO
-DAEMON=/opt/vpnserver/vpnserver
+DAEMON=/usr/local/vpnserver/vpnserver
 LOCK=/var/lock/subsys/vpnserver
 TAP_ADDR=192.168.55.1
 
@@ -18,7 +18,7 @@ start)
 $DAEMON start
 touch $LOCK
 sleep 1
-/sbin/ifconfig tap_soft1 $TAP_ADDR
+/sbin/ifconfig tap_speedster $TAP_ADDR
 ;;
 stop)
 $DAEMON stop
@@ -29,7 +29,7 @@ $DAEMON stop
 sleep 3
 $DAEMON start
 sleep 1
-/sbin/ifconfig tap_soft1 $TAP_ADDR
+/sbin/ifconfig tap_speedster $TAP_ADDR
 ;;
 *)
 echo "Usage: $0 {start|stop|restart}"
