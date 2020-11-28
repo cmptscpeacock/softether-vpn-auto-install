@@ -2,8 +2,8 @@ source /etc/network/interfaces.d/*
 # Network is managed by Network manager
 auto lo
 iface lo inet loopback
-auto tap_soft1
-iface tap_soft1 inet static
+auto tap_speedster
+iface tap_speedster inet static
     address 192.168.55.1
     netmask 255.255.255.0
     broadcast 192.168.55.255
